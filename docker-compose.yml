@@ -6,10 +6,5 @@ services:
     image: perspective-microservice
     ports:
       - "3001:3000"
-    networks:
-      - app-network
     restart: unless-stopped
     container_name: perspective-microservice
-networks:
-  app-network:
-    driver: bridge

@@ -22,10 +22,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Install dependencies
         run: pnpm install
+
+      - name: Create .env file
+        run: |
+          echo "PORT=${{ secrets.PORT }}" > .env
+          echo "API_KEY_PERSPECTIVE=${{ secrets.API_KEY_PERSPECTIVE }}" >> .env
+          echo "TOKEN=${{ secrets.TOKEN }}" >> .env
+
+      - name: check env file and variables
+        run: |
+          cat .env
+          ls
 
       - name: Build project
         run: pnpm run build
@@ -40,7 +51,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          source: 'dist/*'
+          source: "dist/*"
           target: ${{ secrets.TARGETPATH }}
 
       - name: Run Docker Compose on VPS
